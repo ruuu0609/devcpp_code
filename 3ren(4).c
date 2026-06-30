@@ -6,7 +6,7 @@
 #include <windows.h>
 
 
-// ====================== ºê¶¨Òå ======================
+// ====================== å®å®šä¹‰ ======================
 #define MAX_CONTACT 1000
 #define MAX_SMS 2000
 #define MAX_NUM 100
@@ -19,11 +19,11 @@
 #define TEMP_BUF_LEN    1024
 #define BACKUP_BUFF_LEN 10240
 #define VCF_LINE_LIMIT  512
-#define EXPORT_CSV_NAME "ÍÑÃôÍ¨Ñ¶Â¼µ¼³ö.csv"
-#define EXPORT_TXT_NAME "ÍÑÃôÍ¨Ñ¶Â¼µ¼³ö.txt"
+#define EXPORT_CSV_NAME "è„±æ•é€šè®¯å½•å¯¼å‡º.csv"
+#define EXPORT_TXT_NAME "è„±æ•é€šè®¯å½•å¯¼å‡º.txt"
 
-// ====================== ½á¹¹Ìå¶¨Òå ======================
-// Ö÷Í¨Ñ¶Â¼ÁªÏµÈË
+// ====================== ç»“æ„ä½“å®šä¹‰ ======================
+// ä¸»é€šè®¯å½•è”ç³»äºº
 typedef struct {
     int id;
     char name[20];
@@ -44,20 +44,20 @@ typedef struct {
     char custom_tag[60];
 } Contact;
 
-// ²Ù×÷ÈÕÖ¾
+// æ“ä½œæ—¥å¿—
 typedef struct {
     char opName[20];
     char opPhone[12];
     char msg[50];
 } OpLog;
 
-// ÓÃ»§
+// ç”¨æˆ·
 typedef struct {
     char username[20];
     char pwd[20];
 } User;
 
-// ¶ÌĞÅ
+// çŸ­ä¿¡
 typedef struct Sms {
     char phone[12];
     char content[100];
@@ -67,7 +67,7 @@ typedef struct Sms {
     int sms_type;
 } Sms;
 
-// ¹¤¾ßÄ£¿éÁªÏµÈË£¨VCF/±¸·İ×¨ÓÃ£©
+// å·¥å…·æ¨¡å—è”ç³»äººï¼ˆVCF/å¤‡ä»½ä¸“ç”¨ï¼‰
 typedef struct ContactInfo
 {
     char name[MAX_NAME_LEN];
@@ -77,8 +77,8 @@ typedef struct ContactInfo
     int msgSendHour;
 } ContactInfo;
 
-// ====================== º¯ÊıÉùÃ÷ ======================
-// Í¨ÓÃ¹¤¾ß
+// ====================== å‡½æ•°å£°æ˜ ======================
+// é€šç”¨å·¥å…·
 void clearBuf();
 long long getNowTimeStamp();
 int verifyPhoneText(char *str);
@@ -88,7 +88,7 @@ void getMonthDay(long long ts, char buf[]);
 int checkPhoneValid(char *phone);
 void mobileDesensitize(char *phoneNum);
 
-// ÎÄ¼ş¶ÁĞ´(Ö÷Í¨Ñ¶Â¼)
+// æ–‡ä»¶è¯»å†™(ä¸»é€šè®¯å½•)
 int readContactBin(Contact con[], char *path);
 void writeContactBin(Contact con[], int num, char *path);
 void appendLogBin(OpLog log, char *path);
@@ -97,12 +97,12 @@ void saveSmsBin(Sms arr[], int cnt);
 void appendSmsBin(Sms arr[], int cnt);
 void saveContactBin(Contact arr[], int cnt);
 
-// ÓÃ»§&ÏµÍ³³õÊ¼»¯
+// ç”¨æˆ·&ç³»ç»Ÿåˆå§‹åŒ–
 void systemInit();
 void registerUser();
 int loginCheck();
 
-// Ö÷Í¨Ñ¶Â¼CRUD
+// ä¸»é€šè®¯å½•CRUD
 void addContact();
 void showAllContact();
 void searchContact();
@@ -110,7 +110,7 @@ void modifyContact();
 void delContact();
 void addBlack();
 
-// ÁªÏµÈËÀ©Õ¹¹¦ÄÜ
+// è”ç³»äººæ‰©å±•åŠŸèƒ½
 void checkTempContact();
 void groupSendSms(int gid);
 void autoCreateLabel(Contact arr[], int len);
@@ -122,13 +122,13 @@ void filterByGroupID(int gid);
 void sortContactByName();
 void showLog();
 
-// ¶ÌĞÅ¹¦ÄÜ
+// çŸ­ä¿¡åŠŸèƒ½
 void addReceiveSms();
 void sendOneSms();
 void replySms();
 void showReceivedSms();
 
-// ¹¤¾ßÄ£¿é£¨ÎŞÈ«¾ÖÊı×é£¬È«²¿´«²Î£©
+// å·¥å…·æ¨¡å—ï¼ˆæ— å…¨å±€æ•°ç»„ï¼Œå…¨éƒ¨ä¼ å‚ï¼‰
 void loadBinaryDataToMemory(ContactInfo data[], int *total, int groupCnt[], int hourCnt[]);
 void batchImportVCF();
 void exportDesensitizeData(int exportType);
@@ -140,11 +140,11 @@ void binaryDataEncrypt(unsigned char *data, int len);
 void createVersionBackup();
 void restoreHistoryBackup();
 
-// ²Ëµ¥
+// èœå•
 void loginMenu();
 void mainMenu();
 
-// ====================== Í¨ÓÃ¹¤¾ßÊµÏÖ ======================
+// ====================== é€šç”¨å·¥å…·å®ç° ======================
 void clearBuf() {
     while (getchar() != '\n');
 }
@@ -178,14 +178,14 @@ void getMonthDay(long long ts, char buf[])
     int tmMon, tmDay;
     if (ts == 0)
     {
-        strcpy(buf, "ÎŞ");
+        strcpy(buf, "æ— ");
         return;
     }
     time_t t = (time_t)ts;
     struct tm tm = *localtime(&t);
     tmMon = tm.tm_mon + 1;
     tmDay = tm.tm_mday;
-    sprintf(buf, "%dÔÂ%dÈÕ", tmMon, tmDay);
+    sprintf(buf, "%dæœˆ%dæ—¥", tmMon, tmDay);
 }
 
 int checkRepeat(Contact con[], int count, char phone[]) {
@@ -218,14 +218,14 @@ void mobileDesensitize(char *phoneNum)
         return;
     if(len > 11)
         phoneNum[11] = '\0';
-    // È«²¿¸ÄÎª phoneNum£¬²»ÊÇ phone
+    // å…¨éƒ¨æ”¹ä¸º phoneNumï¼Œä¸æ˜¯ phone
     phoneNum[3] = '*';
     phoneNum[4] = '*';
     phoneNum[5] = '*';
     phoneNum[6] = '*';
 }
 
-// ====================== Ö÷Í¨Ñ¶Â¼ÎÄ¼ş²Ù×÷ ======================
+// ====================== ä¸»é€šè®¯å½•æ–‡ä»¶æ“ä½œ ======================
 int readContactBin(Contact con[], char *path) {
     FILE *fp = fopen(path, "rb");
     int cnt = 0;
@@ -277,7 +277,7 @@ void saveContactBin(Contact arr[], int cnt) {
     writeContactBin(arr, cnt, "contact.bin");
 }
 
-// ====================== ÏµÍ³³õÊ¼»¯&ÓÃ»§ ======================
+// ====================== ç³»ç»Ÿåˆå§‹åŒ–&ç”¨æˆ· ======================
 void systemInit() {
     const char *fileList[] = {"contact.bin", "log.bin", "user.bin", "sms.bin", MAIN_BIN_FILE};
     int i, total = sizeof(fileList)/sizeof(fileList[0]);
@@ -293,17 +293,17 @@ void registerUser() {
     User u;
     FILE *fp = fopen("user.bin", "ab");
     if (fp == NULL) {
-        printf("ÎÄ¼ş´ò¿ªÊ§°Ü£¬×¢²áÖĞ¶Ï£¡\n");
+        printf("æ–‡ä»¶æ‰“å¼€å¤±è´¥ï¼Œæ³¨å†Œä¸­æ–­ï¼\n");
         return;
     }
-    printf("ÇëÊäÈëÓÃ»§Ãû£º");
+    printf("è¯·è¾“å…¥ç”¨æˆ·åï¼š");
     scanf("%s", u.username);
     clearBuf();
-    printf("ÇëÊäÈëÃÜÂë£º");
+    printf("è¯·è¾“å…¥å¯†ç ï¼š");
     scanf("%s", u.pwd);
     fwrite(&u, sizeof(User), 1, fp);
     fclose(fp);
-    printf("×¢²á³É¹¦£¡\n");
+    printf("æ³¨å†ŒæˆåŠŸï¼\n");
 }
 
 int loginCheck() {
@@ -312,15 +312,15 @@ int loginCheck() {
     FILE *fp = fopen("user.bin", "rb");
     int flag = 0;
     if (fp == NULL) {
-        printf("ÎŞÓÃ»§ÕËºÅ£¬ÇëÏÈ×¢²á£¡\n");
+        printf("æ— ç”¨æˆ·è´¦å·ï¼Œè¯·å…ˆæ³¨å†Œï¼\n");
         registerUser();
         return 0;
     }
-    printf("====ÏµÍ³µÇÂ¼====\n");
-    printf("ÓÃ»§Ãû£º");
+    printf("====ç³»ç»Ÿç™»å½•====\n");
+    printf("ç”¨æˆ·åï¼š");
     scanf("%s", un);
     clearBuf();
-    printf("ÃÜÂë£º");
+    printf("å¯†ç ï¼š");
     scanf("%s", pw);
     while (fread(&u, sizeof(User), 1, fp)) {
         if (strcmp(u.username, un) == 0 && strcmp(u.pwd, pw) == 0) {
@@ -331,57 +331,57 @@ int loginCheck() {
     fclose(fp);
     if(flag)
     {
-        printf("µÇÂ¼³É¹¦£¡\n");
+        printf("ç™»å½•æˆåŠŸï¼\n");
         return 1;
     }
-    printf("ÕËºÅ»òÃÜÂë´íÎó£¡\n");
+    printf("è´¦å·æˆ–å¯†ç é”™è¯¯ï¼\n");
     return 0;
 }
 
-// ====================== ÁªÏµÈËCRUD ======================
+// ====================== è”ç³»äººCRUD ======================
 void addContact() {
     Contact allCon[MAX_CONTACT], newCon;
     int count = readContactBin(allCon, "contact.bin");
     int days, i;
     char birthStr[10];
-    printf("====Ìí¼ÓÁªÏµÈË====\n");
+    printf("====æ·»åŠ è”ç³»äºº====\n");
     initNewContact(&newCon);
-    printf("ĞÕÃû£º");
+    printf("å§“åï¼š");
     scanf("%s", newCon.name);
     clearBuf();
-    printf("ÊÖ»úºÅ(11Î»)£º");
+    printf("æ‰‹æœºå·(11ä½)ï¼š");
     scanf("%s", newCon.phone);
     clearBuf();
     if (strlen(newCon.phone) != 11) {
-        printf("ÊÖ»úºÅ±ØĞëÎª11Î»Êı×Ö£¡\n");
+        printf("æ‰‹æœºå·å¿…é¡»ä¸º11ä½æ•°å­—ï¼\n");
         return;
     }
     if (checkRepeat(allCon, count, newCon.phone)) {
-        printf("¸ÃÊÖ»úºÅÒÑ´æÔÚ£¡\n");
+        printf("è¯¥æ‰‹æœºå·å·²å­˜åœ¨ï¼\n");
         return;
     }
-    printf("·Ö×éÃû³Æ£º");
+    printf("åˆ†ç»„åç§°ï¼š");
     scanf("%s", newCon.group);
     clearBuf();
-    printf("·Ö×éID(Êı×Ö)£º");
+    printf("åˆ†ç»„ID(æ•°å­—)ï¼š");
     scanf("%d", &newCon.group_id);
     clearBuf();
-    printf("ÒşË½µÈ¼¶(1¹«¿ª/2Ë½ÃÜ/3Òş²Ø)£º");
+    printf("éšç§ç­‰çº§(1å…¬å¼€/2ç§å¯†/3éšè—)ï¼š");
     scanf("%d", &newCon.privacy);
     clearBuf();
-    printf("ÊÇ·ñÁÙÊ±ÁªÏµÈË(0·ñ/1ÊÇ)£º");
+    printf("æ˜¯å¦ä¸´æ—¶è”ç³»äºº(0å¦/1æ˜¯)ï¼š");
     scanf("%d", &newCon.is_temp);
     clearBuf();
     if (newCon.is_temp == 1) {
-        printf("ÓĞĞ§ÆÚ(Ìì)£º");
+        printf("æœ‰æ•ˆæœŸ(å¤©)ï¼š");
         scanf("%d", &days);
         clearBuf();
         newCon.valid_ts = getNowTimeStamp() + days * 86400;
     }
-    printf("±¸×¢£º");
+    printf("å¤‡æ³¨ï¼š");
     scanf("%s", newCon.remark);
     clearBuf();
-    printf("¼ÍÄîÈÕ(ÊäÈëMMDD£¬Èç0627£¬0±íÊ¾ÎŞ): ");
+    printf("çºªå¿µæ—¥(è¾“å…¥MMDDï¼Œå¦‚0627ï¼Œ0è¡¨ç¤ºæ— ): ");
 	scanf("%s", birthStr);
 	clearBuf();
 	if (strlen(birthStr) == 4 && strcmp(birthStr, "0") != 0) {
@@ -402,11 +402,11 @@ void addContact() {
     count++;
     autoCreateLabel(allCon, count);
     writeContactBin(allCon, count, "contact.bin");
-    printf("ÁªÏµÈËÌí¼Ó³É¹¦£¡\n");
+    printf("è”ç³»äººæ·»åŠ æˆåŠŸï¼\n");
     OpLog log;
     strcpy(log.opName, newCon.name);
     strcpy(log.opPhone, newCon.phone);
-    strcpy(log.msg, "Ìí¼ÓÁªÏµÈË");
+    strcpy(log.msg, "æ·»åŠ è”ç³»äºº");
     appendLogBin(log, "log.bin");
 }
 
@@ -416,11 +416,11 @@ void showAllContact() {
     int i;
     char md[20];
     if (count == 0) {
-        printf("Í¨Ñ¶Â¼ÎŞÊı¾İ£¡\n");
+        printf("é€šè®¯å½•æ— æ•°æ®ï¼\n");
         return;
     }
-    printf("\n===================ËùÓĞÁªÏµÈË===================\n");
-    printf("ID\tĞÕÃû\tÊÖ»úºÅ\t\t·Ö×é\tÒşË½µÈ¼¶\tºÚÃûµ¥\t±êÇ©\t\t¼ÍÄîÈÕ\n");
+    printf("\n===================æ‰€æœ‰è”ç³»äºº===================\n");
+    printf("ID\tå§“å\tæ‰‹æœºå·\t\tåˆ†ç»„\téšç§ç­‰çº§\té»‘åå•\tæ ‡ç­¾\t\tçºªå¿µæ—¥\n");
     for (i = 0; i < count; i++) {
         getMonthDay(allCon[i].anniv_ts, md);
 		printf("%d\t%s\t%s\t%s\t%d\t\t%s\t%-16s%s\n",
@@ -429,7 +429,7 @@ void showAllContact() {
        		allCon[i].phone,
        		allCon[i].group,
        		allCon[i].privacy,
-       		allCon[i].isBlack == 1 ? "ÊÇ" : "·ñ",
+       		allCon[i].isBlack == 1 ? "æ˜¯" : "å¦",
        		allCon[i].label,
        		md);
     }
@@ -441,18 +441,18 @@ void searchContact() {
     char key[12];
     int count = readContactBin(allCon, "contact.bin");
     int i, flag = 0;
-    printf("ÇëÊäÈëÒª²éÑ¯µÄÊÖ»úºÅ£º");
+    printf("è¯·è¾“å…¥è¦æŸ¥è¯¢çš„æ‰‹æœºå·ï¼š");
     scanf("%s", key);
     clearBuf();
     for (i = 0; i < count; i++) {
         if (strcmp(allCon[i].phone, key) == 0) {
-            printf("\nÕÒµ½ÁªÏµÈË£º\n");
+            printf("\næ‰¾åˆ°è”ç³»äººï¼š\n");
             printContactInfo(allCon[i]);
             flag = 1;
             break;
         }
     }
-    if (!flag) printf("Î´²éÑ¯µ½¸ÃÁªÏµÈË£¡\n");
+    if (!flag) printf("æœªæŸ¥è¯¢åˆ°è¯¥è”ç³»äººï¼\n");
 }
 
 void modifyContact() {
@@ -460,7 +460,7 @@ void modifyContact() {
     char phone[12];
     int count = readContactBin(allCon, "contact.bin");
     int i, idx = -1;
-    printf("ÇëÊäÈëÒªĞŞ¸ÄµÄÊÖ»úºÅ£º");
+    printf("è¯·è¾“å…¥è¦ä¿®æ”¹çš„æ‰‹æœºå·ï¼š");
     scanf("%s", phone);
     clearBuf();
     for (i = 0; i < count; i++) {
@@ -470,22 +470,22 @@ void modifyContact() {
         }
     }
     if (idx == -1) {
-        printf("ÁªÏµÈË²»´æÔÚ£¡\n");
+        printf("è”ç³»äººä¸å­˜åœ¨ï¼\n");
         return;
     }
-    printf("ĞŞ¸ÄĞÕÃû£º");
+    printf("ä¿®æ”¹å§“åï¼š");
     scanf("%s", allCon[idx].name);
     clearBuf();
-    printf("ĞŞ¸Ä·Ö×éÃû³Æ£º");
+    printf("ä¿®æ”¹åˆ†ç»„åç§°ï¼š");
     scanf("%s", allCon[idx].group);
     clearBuf();
-    printf("ĞŞ¸Ä·Ö×éID£º");
+    printf("ä¿®æ”¹åˆ†ç»„IDï¼š");
     scanf("%d", &allCon[idx].group_id);
     clearBuf();
-    printf("ĞŞ¸ÄÒşË½µÈ¼¶(1/2/3)£º");
+    printf("ä¿®æ”¹éšç§ç­‰çº§(1/2/3)ï¼š");
     scanf("%d", &allCon[idx].privacy);
     clearBuf();
-    printf("ĞŞ¸Ä±¸×¢£º");
+    printf("ä¿®æ”¹å¤‡æ³¨ï¼š");
     scanf("%s", allCon[idx].remark);
     clearBuf();
     allCon[idx].last_contact_ts = getNowTimeStamp();
@@ -494,9 +494,9 @@ void modifyContact() {
     OpLog log;
     strcpy(log.opName, allCon[idx].name);
     strcpy(log.opPhone, allCon[idx].phone);
-    strcpy(log.msg, "ĞŞ¸ÄÁªÏµÈËĞÅÏ¢");
+    strcpy(log.msg, "ä¿®æ”¹è”ç³»äººä¿¡æ¯");
     appendLogBin(log, "log.bin");
-    printf("ĞŞ¸Ä³É¹¦£¡\n");
+    printf("ä¿®æ”¹æˆåŠŸï¼\n");
 }
 
 void delContact() {
@@ -505,7 +505,7 @@ void delContact() {
     int count = readContactBin(allCon, "contact.bin");
     int i, idx = -1;
     char opt;
-    printf("ÇëÊäÈëÒªÉ¾³ıµÄÊÖ»úºÅ£º");
+    printf("è¯·è¾“å…¥è¦åˆ é™¤çš„æ‰‹æœºå·ï¼š");
     scanf("%s", phone);
     clearBuf();
     for (i = 0; i < count; i++) {
@@ -515,27 +515,27 @@ void delContact() {
         }
     }
     if (idx == -1) {
-        printf("ÎŞ¸ÃÁªÏµÈË£¡\n");
+        printf("æ— è¯¥è”ç³»äººï¼\n");
         return;
     }
-    printf("È·ÈÏÉ¾³ı£¿(y/n)£º");
+    printf("ç¡®è®¤åˆ é™¤ï¼Ÿ(y/n)ï¼š");
     scanf("%c", &opt);
     clearBuf();
     if (opt != 'y' && opt != 'Y') {
-        printf("È¡ÏûÉ¾³ı\n");
+        printf("å–æ¶ˆåˆ é™¤\n");
         return;
     }
     OpLog tempLog;
     strcpy(tempLog.opName, allCon[idx].name);
     strcpy(tempLog.opPhone, allCon[idx].phone);
-    strcpy(tempLog.msg, "É¾³ıÁªÏµÈË");
+    strcpy(tempLog.msg, "åˆ é™¤è”ç³»äºº");
     appendLogBin(tempLog, "log.bin");
     for (i = idx; i < count - 1; i++) {
         allCon[i] = allCon[i + 1];
     }
     count--;
     writeContactBin(allCon, count, "contact.bin");
-    printf("É¾³ı³É¹¦£¡\n");
+    printf("åˆ é™¤æˆåŠŸï¼\n");
 }
 
 void addBlack() {
@@ -543,18 +543,18 @@ void addBlack() {
     char phone[12];
     int count = readContactBin(allCon, "contact.bin");
     int i, idx = -1;
-    printf("ÇëÊäÈëÒªÀ­ºÚµÄÊÖ»úºÅ£º");
+    printf("è¯·è¾“å…¥è¦æ‹‰é»‘çš„æ‰‹æœºå·ï¼š");
     scanf("%s", phone);
     clearBuf();
     for (i = 0; i < count; i++) {
         if (strcmp(allCon[i].phone, phone) == 0) idx = i;
     }
     if (idx == -1) {
-        printf("ÁªÏµÈË²»´æÔÚ£¡\n");
+        printf("è”ç³»äººä¸å­˜åœ¨ï¼\n");
         return;
     }
     if (allCon[idx].isBlack == 1) {
-        printf("¸ÃÁªÏµÈËÒÑÔÚºÚÃûµ¥£¡\n");
+        printf("è¯¥è”ç³»äººå·²åœ¨é»‘åå•ï¼\n");
         return;
     }
     allCon[idx].isBlack = 1;
@@ -563,12 +563,12 @@ void addBlack() {
     OpLog log;
     strcpy(log.opName, allCon[idx].name);
     strcpy(log.opPhone, allCon[idx].phone);
-    strcpy(log.msg, "À­ºÚÁªÏµÈË");
+    strcpy(log.msg, "æ‹‰é»‘è”ç³»äºº");
     appendLogBin(log, "log.bin");
-    printf("À­ºÚ²Ù×÷³É¹¦£¡\n");
+    printf("æ‹‰é»‘æ“ä½œæˆåŠŸï¼\n");
 }
 
-// ====================== ÁªÏµÈËÀ©Õ¹¹¦ÄÜ ======================
+// ====================== è”ç³»äººæ‰©å±•åŠŸèƒ½ ======================
 void checkTempContact() {
     Contact contactBuf[MAX_CONTACT];
     int contactCnt = readContactBin(contactBuf, "contact.bin");
@@ -579,7 +579,7 @@ void checkTempContact() {
     int delPhoneNum = 0;
     int i, s, p;
     if (contactCnt == 0) {
-        printf("ÎŞÓĞĞ§ÁªÏµÈËÊı¾İ£¬Ìø¹ıÁÙÊ±ÁªÏµÈËÇåÀí£¡\n");
+        printf("æ— æœ‰æ•ˆè”ç³»äººæ•°æ®ï¼Œè·³è¿‡ä¸´æ—¶è”ç³»äººæ¸…ç†ï¼\n");
         return;
     }
     loadSmsBin(smsBuf, &smsCnt);
@@ -604,12 +604,12 @@ void checkTempContact() {
     }
     saveContactBin(contactBuf, newContactCnt);
     saveSmsBin(smsBuf, newSmsCnt);
-    printf("×Ô¶¯ÇåÀíÍê³É£¡¹²É¾³ı%d¸ö¹ıÆÚÁÙÊ±ÁªÏµÈË¼°¹ØÁª¶ÌĞÅ\n", delPhoneNum);
+    printf("è‡ªåŠ¨æ¸…ç†å®Œæˆï¼å…±åˆ é™¤%dä¸ªè¿‡æœŸä¸´æ—¶è”ç³»äººåŠå…³è”çŸ­ä¿¡\n", delPhoneNum);
     OpLog log;
-    strcpy(log.opName, "ÏµÍ³");
+    strcpy(log.opName, "ç³»ç»Ÿ");
     strcpy(log.opPhone, "system");
     char msg[50];
-    sprintf(msg, "ÇåÀí%d¸ö¹ıÆÚÁÙÊ±ÁªÏµÈË", delPhoneNum);
+    sprintf(msg, "æ¸…ç†%dä¸ªè¿‡æœŸä¸´æ—¶è”ç³»äºº", delPhoneNum);
     strcpy(log.msg, msg);
     appendLogBin(log, "log.bin");
 }
@@ -632,26 +632,26 @@ void groupSendSms(int gid) {
         }
     }
     if (sendNum == 0) {
-        printf("¸Ã·Ö×éÎŞÓĞĞ§ÁªÏµÈË£¬Èº·¢¶ÌĞÅÖÕÖ¹£¡\n");
+        printf("è¯¥åˆ†ç»„æ— æœ‰æ•ˆè”ç³»äººï¼Œç¾¤å‘çŸ­ä¿¡ç»ˆæ­¢ï¼\n");
         return;
     }
-    printf("ÇëÊäÈëÈº·¢¶ÌĞÅÄÚÈİ£º");
+    printf("è¯·è¾“å…¥ç¾¤å‘çŸ­ä¿¡å†…å®¹ï¼š");
     scanf("%s", inputText);
     clearBuf();
     if (!verifyPhoneText(inputText)) {
-        printf("ÄÚÈİ°üº¬·Ç·¨×Ö·û£¬Èº·¢¶ÌĞÅÖÕÖ¹£¡\n");
+        printf("å†…å®¹åŒ…å«éæ³•å­—ç¬¦ï¼Œç¾¤å‘çŸ­ä¿¡ç»ˆæ­¢ï¼\n");
         return;
     }
     for (i = 0; i < sendNum; i++) {
         strcpy(sendBatch[i].content, inputText);
     }
     appendSmsBin(sendBatch, sendNum);
-    printf("Èº·¢¶ÌĞÅ³É¹¦£¡¹²·¢ËÍ%dÌõ\n", sendNum);
+    printf("ç¾¤å‘çŸ­ä¿¡æˆåŠŸï¼å…±å‘é€%dæ¡\n", sendNum);
     OpLog log;
-    strcpy(log.opName, "ÏµÍ³");
+    strcpy(log.opName, "ç³»ç»Ÿ");
     strcpy(log.opPhone, "system");
     char msg[50];
-    sprintf(msg, "Ïò·Ö×é%d·¢ËÍ%dÌõ¶ÌĞÅ", gid, sendNum);
+    sprintf(msg, "å‘åˆ†ç»„%då‘é€%dæ¡çŸ­ä¿¡", gid, sendNum);
     strcpy(log.msg, msg);
     appendLogBin(log, "log.bin");
 }
@@ -673,7 +673,7 @@ void autoCreateLabel(Contact arr[], int len) {
     	strcmp(prefix, "195")==0 || strcmp(prefix, "198")==0
 	)
 	{
-   		strcpy(arr[i].label, "ÒÆ¶¯");
+   		strcpy(arr[i].label, "ç§»åŠ¨");
 	}
 	else if(
 	    strcmp(prefix, "130")==0 || strcmp(prefix, "131")==0 || strcmp(prefix, "132")==0 ||
@@ -683,7 +683,7 @@ void autoCreateLabel(Contact arr[], int len) {
 	    strcmp(prefix, "186")==0 || strcmp(prefix, "196")==0
 	)
 	{
-   		strcpy(arr[i].label, "ÁªÍ¨");
+   		strcpy(arr[i].label, "è”é€š");
 	}
 	else if(
     	strcmp(prefix, "133")==0 || strcmp(prefix, "149")==0 || strcmp(prefix, "153")==0 ||
@@ -693,23 +693,23 @@ void autoCreateLabel(Contact arr[], int len) {
     	strcmp(prefix, "199")==0
 	)
 	{
-    	strcpy(arr[i].label, "µçĞÅ");
+    	strcpy(arr[i].label, "ç”µä¿¡");
 	}
 	else
 	{
-   		strcpy(arr[i].label, "Î´ÖªÔËÓªÉÌ");
+   		strcpy(arr[i].label, "æœªçŸ¥è¿è¥å•†");
 	}
-        if (strstr(arr[i].remark, "¼ÒÈË")) {
-            strcat(arr[i].label, ",¼ÒÈË");
+        if (strstr(arr[i].remark, "å®¶äºº")) {
+            strcat(arr[i].label, ",å®¶äºº");
         }
-        if (strstr(arr[i].remark, "Í¬ÊÂ")) {
-            strcat(arr[i].label, ",Í¬ÊÂ");
+        if (strstr(arr[i].remark, "åŒäº‹")) {
+            strcat(arr[i].label, ",åŒäº‹");
         }
         if (arr[i].is_temp == 1) {
-            strcat(arr[i].label, ",ÁÙÊ±ÁªÏµÈË");
+            strcat(arr[i].label, ",ä¸´æ—¶è”ç³»äºº");
         }
         if (arr[i].isBlack == 1) {
-            strcat(arr[i].label, ",ºÚÃûµ¥");
+            strcat(arr[i].label, ",é»‘åå•");
         }
     }
 }
@@ -720,57 +720,57 @@ void remindAnniversary() {
     int i;
     long long today = getNowTimeStamp();
     int hasRemind = 0;
-    printf("\n===== ¼ÍÄîÈÕÌáĞÑ =====\n");
+    printf("\n===== çºªå¿µæ—¥æé†’ =====\n");
     for (i = 0; i < contactCnt; i++) {
         if (contactBuf[i].anniv_ts != 0 && isSameMD(today, contactBuf[i].anniv_ts)) {
-            printf("½ñÈÕ¼ÍÄîÈÕ£º%s£¨%s£©\n", contactBuf[i].name, contactBuf[i].phone);
+            printf("ä»Šæ—¥çºªå¿µæ—¥ï¼š%sï¼ˆ%sï¼‰\n", contactBuf[i].name, contactBuf[i].phone);
             hasRemind = 1;
         }
         long long gap = today - contactBuf[i].last_contact_ts;
         if (gap > 3600 * 24 * 90) {
-            printf("¾ÃÎ´ÁªÏµ£º%s£¨%s£©£¬ÒÑ90ÌìÎ´ÁªÏµ\n", contactBuf[i].name, contactBuf[i].phone);
+            printf("ä¹…æœªè”ç³»ï¼š%sï¼ˆ%sï¼‰ï¼Œå·²90å¤©æœªè”ç³»\n", contactBuf[i].name, contactBuf[i].phone);
             hasRemind = 1;
         }
     }
     if (!hasRemind) {
-        printf("ÔİÎŞ¼ÍÄîÈÕ/¾ÃÎ´ÁªÏµÌáĞÑ\n");
+        printf("æš‚æ— çºªå¿µæ—¥/ä¹…æœªè”ç³»æé†’\n");
     }
 }
 
 void printContactInfo(Contact c) {
     char md[20];
 	printf("\n-------------------------\n");
-    printf("ID£º%d\n", c.id);
-    printf("ĞÕÃû£º%s\n", c.name);
-    printf("ÊÖ»úºÅ£º%s\n", c.phone);
-    printf("·Ö×é£º%s£¨ID£º%d£©\n", c.group, c.group_id);
-    printf("ÒşË½µÈ¼¶£º%d\n", c.privacy);
-    printf("±êÇ©£º%s\n", c.label);
-    printf("±¸×¢£º%s\n", c.remark);
-    printf("ºÚÃûµ¥£º%s\n", c.isBlack ? "ÊÇ" : "·ñ");
-    printf("ÊÇ·ñÁÙÊ±£º%s\n", c.is_temp ? "ÊÇ" : "·ñ");
+    printf("IDï¼š%d\n", c.id);
+    printf("å§“åï¼š%s\n", c.name);
+    printf("æ‰‹æœºå·ï¼š%s\n", c.phone);
+    printf("åˆ†ç»„ï¼š%sï¼ˆIDï¼š%dï¼‰\n", c.group, c.group_id);
+    printf("éšç§ç­‰çº§ï¼š%d\n", c.privacy);
+    printf("æ ‡ç­¾ï¼š%s\n", c.label);
+    printf("å¤‡æ³¨ï¼š%s\n", c.remark);
+    printf("é»‘åå•ï¼š%s\n", c.isBlack ? "æ˜¯" : "å¦");
+    printf("æ˜¯å¦ä¸´æ—¶ï¼š%s\n", c.is_temp ? "æ˜¯" : "å¦");
     getMonthDay(c.anniv_ts, md);
-	printf("¼ÍÄîÈÕ£º%s\n", md);
+	printf("çºªå¿µæ—¥ï¼š%s\n", md);
     printf("-------------------------\n");
 }
 
 void initNewContact(Contact *c) {
     c->id = 0;
-    strcpy(c->name, "Î´ÃüÃû");
+    strcpy(c->name, "æœªå‘½å");
     strcpy(c->phone, "");
-    strcpy(c->group, "Ä¬ÈÏ·Ö×é");
+    strcpy(c->group, "é»˜è®¤åˆ†ç»„");
     c->privacy = 1;
     c->isBlack = 0;
     c->is_temp = 0;
     c->valid_ts = 0;
     c->group_id = 1;
-    strcpy(c->label, "Ä¬ÈÏ");
+    strcpy(c->label, "é»˜è®¤");
     strcpy(c->remark, "");
     c->anniv_ts = 0;
     c->last_contact_ts = getNowTimeStamp();
     c->priority = 5;
     c->create_ts = getNowTimeStamp();
-    strcpy(c->source, "ÊÖ¶¯Ìí¼Ó");
+    strcpy(c->source, "æ‰‹åŠ¨æ·»åŠ ");
     strcpy(c->custom_tag, "");
 }
 
@@ -779,17 +779,17 @@ void filterByGroup() {
     char gName[15];
     int count = readContactBin(allCon, "contact.bin");
     int i, num = 0;
-    printf("ÇëÊäÈëÒªÉ¸Ñ¡µÄ·Ö×éÃû³Æ£º");
+    printf("è¯·è¾“å…¥è¦ç­›é€‰çš„åˆ†ç»„åç§°ï¼š");
     scanf("%s", gName);
     clearBuf();
-    printf("\n¡¾%s¡¿·Ö×éµÄÁªÏµÈË£º\n", gName);
+    printf("\nã€%sã€‘åˆ†ç»„çš„è”ç³»äººï¼š\n", gName);
     for (i = 0; i < count; i++) {
         if (strcmp(allCon[i].group, gName) == 0) {
-            printf("%s\t%s\t±êÇ©£º%s\n", allCon[i].name, allCon[i].phone, allCon[i].label);
+            printf("%s\t%s\tæ ‡ç­¾ï¼š%s\n", allCon[i].name, allCon[i].phone, allCon[i].label);
             num++;
         }
     }
-    if (num == 0) printf("¸Ã·Ö×éÎŞÁªÏµÈË\n");
+    if (num == 0) printf("è¯¥åˆ†ç»„æ— è”ç³»äºº\n");
 }
 
 void filterByGroupID(int gid)
@@ -797,18 +797,18 @@ void filterByGroupID(int gid)
     Contact allCon[MAX_CONTACT];
     int count = readContactBin(allCon, "contact.bin");
     int i, num = 0;
-    // printfµ¥¶ÀÒ»ĞĞ£¬Ä©Î²¼Ó·ÖºÅ£¬ÔÙ»»ĞĞĞ´forÑ­»·
-    printf("\n¡¾·Ö×éID£º%d¡¿µÄÁªÏµÈË£º\n", gid);
+    // printfå•ç‹¬ä¸€è¡Œï¼Œæœ«å°¾åŠ åˆ†å·ï¼Œå†æ¢è¡Œå†™forå¾ªç¯
+    printf("\nã€åˆ†ç»„IDï¼š%dã€‘çš„è”ç³»äººï¼š\n", gid);
     for (i = 0; i < count; i++)
     {
         if (allCon[i].group_id == gid)
         {
-            printf("%s\t%s\t±êÇ©£º%s\n", allCon[i].name, allCon[i].phone, allCon[i].label);
+            printf("%s\t%s\tæ ‡ç­¾ï¼š%s\n", allCon[i].name, allCon[i].phone, allCon[i].label);
             num++;
         }
     }
     if (num == 0)
-        printf("¸Ã·Ö×éIDÎŞÁªÏµÈË\n");
+        printf("è¯¥åˆ†ç»„IDæ— è”ç³»äºº\n");
 }
 void sortContactByName() {
     Contact allCon[MAX_CONTACT];
@@ -816,7 +816,7 @@ void sortContactByName() {
     int i, j;
     Contact temp;
     if (count == 0) {
-        printf("Í¨Ñ¶Â¼ÎŞÊı¾İ£¬ÎŞĞèÅÅĞò£¡\n");
+        printf("é€šè®¯å½•æ— æ•°æ®ï¼Œæ— éœ€æ’åºï¼\n");
         return;
     }
     for (i = 0; i < count - 1; i++) {
@@ -829,11 +829,11 @@ void sortContactByName() {
         }
     }
     writeContactBin(allCon, count, "contact.bin");
-    printf("ÁªÏµÈËÒÑ°´ĞÕÃûÉıĞòÅÅĞò£¡\n");
+    printf("è”ç³»äººå·²æŒ‰å§“åå‡åºæ’åºï¼\n");
     OpLog log;
-    strcpy(log.opName, "ÏµÍ³");
+    strcpy(log.opName, "ç³»ç»Ÿ");
     strcpy(log.opPhone, "system");
-    strcpy(log.msg, "ÁªÏµÈË°´ĞÕÃûÅÅĞò");
+    strcpy(log.msg, "è”ç³»äººæŒ‰å§“åæ’åº");
     appendLogBin(log, "log.bin");
 }
 
@@ -841,18 +841,18 @@ void showLog() {
     OpLog log;
     FILE *fp = fopen("log.bin", "rb");
     if (fp == NULL) {
-        printf("ÔİÎŞ²Ù×÷ÈÕÖ¾£¡\n");
+        printf("æš‚æ— æ“ä½œæ—¥å¿—ï¼\n");
         return;
     }
-    printf("\n================²Ù×÷ÈÕÖ¾================\n");
+    printf("\n================æ“ä½œæ—¥å¿—================\n");
     while (fread(&log, sizeof(OpLog), 1, fp)) {
-        printf("²Ù×÷ÈË£º%s | ¹ØÁªÊÖ»úºÅ£º%s | ²Ù×÷£º%s\n", log.opName, log.opPhone, log.msg);
+        printf("æ“ä½œäººï¼š%s | å…³è”æ‰‹æœºå·ï¼š%s | æ“ä½œï¼š%s\n", log.opName, log.opPhone, log.msg);
     }
     fclose(fp);
     printf("========================================\n");
 }
 
-// ====================== ¶ÌĞÅ¹¦ÄÜ ======================
+// ====================== çŸ­ä¿¡åŠŸèƒ½ ======================
 void sendOneSms()
 {
     Sms s;
@@ -861,28 +861,36 @@ void sendOneSms()
     int cnt = readContactBin(contacts, "contact.bin");
     int i, found = 0;
     char c;
-    printf("\n======= µ¥·¢¶ÌĞÅ =======\n");
-    printf("ÇëÊäÈë¶Ô·½ÊÖ»úºÅ£º");
+    printf("\n======= å•å‘çŸ­ä¿¡ =======\n");
+    printf("è¯·è¾“å…¥å¯¹æ–¹æ‰‹æœºå·ï¼š");
     scanf("%s", phone);
     clearBuf();
     for(i=0; i<cnt; i++){
         if(strcmp(contacts[i].phone, phone) == 0){
             found = 1;
             if(contacts[i].isBlack == 1){
-                printf("¸ÃÁªÏµÈËÒÑÀ­ºÚ£¬ÎŞ·¨·¢ËÍ£¡\n");
+                printf("è¯¥è”ç³»äººå·²æ‹‰é»‘ï¼Œæ— æ³•å‘é€ï¼\n");
                 return;
             }
             break;
         }
     }
     if(!found){
-        printf("¸ÃºÅÂë²»ÔÚÍ¨Ñ¶Â¼£¬ÊÇ·ñ¼ÌĞø·¢ËÍ£¿(y/n)£º");
+        printf("è¯¥å·ç ä¸åœ¨é€šè®¯å½•ï¼Œæ˜¯å¦ç»§ç»­å‘é€ï¼Ÿ(y/n)ï¼š");
         scanf("%c",&c); clearBuf();
         if(c!='y' && c!='Y') return;
     }
-    printf("ÇëÊäÈë¶ÌĞÅÄÚÈİ£º");
+    printf("è¯·è¾“å…¥çŸ­ä¿¡å†…å®¹ï¼š");
     scanf("%[^\n]", s.content);
     clearBuf();
+
+    // æ–°å¢å†…å®¹æ ¡éªŒ
+    if (!verifyPhoneText(s.content))
+    {
+        printf("çŸ­ä¿¡å†…å®¹å«æœ‰éæ³•å­—ç¬¦ï¼Œä»…å…è®¸å­—æ¯å’Œæ•°å­—ï¼Œå‘é€å¤±è´¥ï¼\n");
+        return;
+    }
+
     strcpy(s.phone, phone);
     s.send_time = getNowTimeStamp();
     s.send_state = 1;
@@ -893,26 +901,25 @@ void sendOneSms()
     loadSmsBin(list, &n);
     list[n++] = s;
     saveSmsBin(list, n);
-    printf("·¢ËÍ³É¹¦£¡\n");
+    printf("å‘é€æˆåŠŸï¼\n");
 }
-
 void replySms()
 {
     Sms sms[MAX_SMS];
     int n=0,i,idx,pos=-1,count=0;
     loadSmsBin(sms, &n);
-    printf("\n======= ÊÕµ½µÄ¶ÌĞÅ =======\n");
+    printf("\n======= æ”¶åˆ°çš„çŸ­ä¿¡ =======\n");
     int has = 0;
     for(i=0; i<n; i++){
         if(sms[i].sms_type == 2){
-            printf("%d¡¢À´×Ô£º%s ÄÚÈİ£º%s\n", ++has, sms[i].phone, sms[i].content);
+            printf("%dã€æ¥è‡ªï¼š%s å†…å®¹ï¼š%s\n", ++has, sms[i].phone, sms[i].content);
         }
     }
     if(has ==0){
-        printf("ÔİÎŞÊÕµ½µÄ¶ÌĞÅ£¡\n");
+        printf("æš‚æ— æ”¶åˆ°çš„çŸ­ä¿¡ï¼\n");
         return;
     }
-    printf("ÇëÑ¡ÔñÒª»Ø¸´µÄĞòºÅ£º");
+    printf("è¯·é€‰æ‹©è¦å›å¤çš„åºå·ï¼š");
     scanf("%d",&idx); clearBuf();
     for(i=0; i<n; i++){
         if(sms[i].sms_type ==2){
@@ -924,13 +931,21 @@ void replySms()
         }
     }
     if(pos ==-1){
-        printf("ĞòºÅ´íÎó£¡\n");
+        printf("åºå·é”™è¯¯ï¼\n");
         return;
     }
     Sms rep;
-    printf("ÇëÊäÈë»Ø¸´ÄÚÈİ£º");
+    printf("è¯·è¾“å…¥å›å¤å†…å®¹ï¼š");
     scanf("%[^\n]", rep.content);
     clearBuf();
+
+    // æ–°å¢å†…å®¹æ ¡éªŒ
+    if (!verifyPhoneText(rep.content))
+    {
+        printf("çŸ­ä¿¡å†…å®¹å«æœ‰éæ³•å­—ç¬¦ï¼Œä»…å…è®¸å­—æ¯å’Œæ•°å­—ï¼Œå›å¤å¤±è´¥ï¼\n");
+        return;
+    }
+
     strcpy(rep.phone, sms[pos].phone);
     rep.send_time = getNowTimeStamp();
     rep.send_state =1;
@@ -938,35 +953,34 @@ void replySms()
     rep.sms_type =1;
     sms[n++] = rep;
     saveSmsBin(sms,n);
-    printf("»Ø¸´³É¹¦£¡\n");
+    printf("å›å¤æˆåŠŸï¼\n");
 }
-
 void showReceivedSms()
 {
     Sms sms[MAX_SMS];
     int n=0,i;
     loadSmsBin(sms, &n);
-    printf("\n======= ÊÕµ½µÄ¶ÌĞÅ =======\n");
+    printf("\n======= æ”¶åˆ°çš„çŸ­ä¿¡ =======\n");
     int has=0;
     for(i=0; i<n; i++){
         if(sms[i].sms_type == 2){
-            printf("À´×Ô£º%s\nÄÚÈİ£º%s\n", sms[i].phone, sms[i].content);
+            printf("æ¥è‡ªï¼š%s\nå†…å®¹ï¼š%s\n", sms[i].phone, sms[i].content);
             printf("------------------------\n");
             has++;
         }
     }
-    if(has ==0) printf("ÔİÎŞÊÕµ½µÄ¶ÌĞÅ£¡\n");
+    if(has ==0) printf("æš‚æ— æ”¶åˆ°çš„çŸ­ä¿¡ï¼\n");
 }
 
 void addReceiveSms()
 {
     Sms s;
     char phone[12];
-    printf("\n======= Ä£ÄâÊÕµ½¶ÌĞÅ =======\n");
-    printf("ÇëÊäÈë¶Ô·½ÊÖ»úºÅ£º");
+    printf("\n======= æ¨¡æ‹Ÿæ”¶åˆ°çŸ­ä¿¡ =======\n");
+    printf("è¯·è¾“å…¥å¯¹æ–¹æ‰‹æœºå·ï¼š");
     scanf("%s", phone);
     clearBuf();
-    printf("ÇëÊäÈë¶ÌĞÅÄÚÈİ£º");
+    printf("è¯·è¾“å…¥çŸ­ä¿¡å†…å®¹ï¼š");
     scanf("%[^\n]", s.content);
     clearBuf();
     strcpy(s.phone, phone);
@@ -979,10 +993,10 @@ void addReceiveSms()
     loadSmsBin(smsList, &n);
     smsList[n++] = s;
     saveSmsBin(smsList, n);
-    printf("³É¹¦ÊÕµ½Ò»Ìõ¶ÌĞÅ£¡\n");
+    printf("æˆåŠŸæ”¶åˆ°ä¸€æ¡çŸ­ä¿¡ï¼\n");
 }
 
-// ====================== ¹¤¾ßÄ£¿é£¨ÎŞÈ«¾ÖÊı×é£¬È«²¿¾Ö²¿´«²Î£© ======================
+// ====================== å·¥å…·æ¨¡å—ï¼ˆæ— å…¨å±€æ•°ç»„ï¼Œå…¨éƒ¨å±€éƒ¨ä¼ å‚ï¼‰ ======================
 void loadBinaryDataToMemory(ContactInfo data[], int *total, int groupCnt[], int hourCnt[])
 {
     FILE *binFile = fopen(MAIN_BIN_FILE, "rb");
@@ -993,17 +1007,17 @@ void loadBinaryDataToMemory(ContactInfo data[], int *total, int groupCnt[], int 
     *total = 0;
     if(binFile == NULL)
     {
-        printf("¡¾Êı¾İ¼ÓÔØÌáÊ¾¡¿±¾µØ²»´æÔÚ¶ş½øÖÆÍ¨Ñ¶Â¼´æ´¢ÎÄ¼ş\n");
+        printf("ã€æ•°æ®åŠ è½½æç¤ºã€‘æœ¬åœ°ä¸å­˜åœ¨äºŒè¿›åˆ¶é€šè®¯å½•å­˜å‚¨æ–‡ä»¶\n");
         return;
     }
     *total = fread(data, sizeof(ContactInfo), MAX_STORE_NUM, binFile);
     fclose(binFile);
     for(i = 0; i < *total; i++)
     {
-        if(strcmp(data[i].group, "Ä¬ÈÏ·Ö×é") == 0) groupCnt[0]++;
-        else if(strcmp(data[i].group, "¼ÒÈË") == 0) groupCnt[1]++;
-        else if(strcmp(data[i].group, "ÅóÓÑ") == 0) groupCnt[2]++;
-        else if(strcmp(data[i].group, "Í¬ÊÂ") == 0) groupCnt[3]++;
+        if(strcmp(data[i].group, "é»˜è®¤åˆ†ç»„") == 0) groupCnt[0]++;
+        else if(strcmp(data[i].group, "å®¶äºº") == 0) groupCnt[1]++;
+        else if(strcmp(data[i].group, "æœ‹å‹") == 0) groupCnt[2]++;
+        else if(strcmp(data[i].group, "åŒäº‹") == 0) groupCnt[3]++;
         int h = data[i].msgSendHour;
         if(h >=0 && h <=23) hourCnt[h]++;
     }
@@ -1025,21 +1039,21 @@ void batchImportVCF()
     memset(&tempContact, 0, sizeof(ContactInfo));
     loadBinaryDataToMemory(localData, &localTotal, localGroup, localHour);
     
-    printf("\n===== VCFÊÖ»úÁªÏµÈËÅúÁ¿µ¼Èë¹¦ÄÜ =====\n");
-    printf("ÇëÊäÈë±¾µØVCFÎÄ¼şÍêÕûÃû³Æ£¨±ØĞë°üº¬ºó×º.vcf£©£º");
+    printf("\n===== VCFæ‰‹æœºè”ç³»äººæ‰¹é‡å¯¼å…¥åŠŸèƒ½ =====\n");
+    printf("è¯·è¾“å…¥æœ¬åœ°VCFæ–‡ä»¶å®Œæ•´åç§°ï¼ˆå¿…é¡»åŒ…å«åç¼€.vcfï¼‰ï¼š");
     scanf("%s", vcfFileName);
     clearBuf();
     
     FILE *vcfFile = fopen(vcfFileName, "rb");
     if(vcfFile == NULL)
     {
-        printf("¡¾µ¼ÈëÊ§°Ü¡¿ÎŞ·¨¶ÁÈ¡Ä¿±êVCFÎÄ¼ş£¡\n");
+        printf("ã€å¯¼å…¥å¤±è´¥ã€‘æ— æ³•è¯»å–ç›®æ ‡VCFæ–‡ä»¶ï¼\n");
         return;
     }
     
     while(fgets(tempLine, VCF_LINE_LIMIT, vcfFile) != NULL)
     {
-        // ¶ÁÈ¡ĞÕÃû
+        // è¯»å–å§“å
         if(strstr(tempLine, "FN:") != NULL)
         {
             char nameBuf[MAX_NAME_LEN] = {0};
@@ -1047,7 +1061,7 @@ void batchImportVCF()
             strcpy(tempContact.name, nameBuf);
         }
         
-        // ¶ÁÈ¡ÊÖ»úºÅ
+        // è¯»å–æ‰‹æœºå·
         if(strstr(tempLine, "TEL:") != NULL)
         {
             char phoneBuf[MAX_PHONE_LEN] = {0};
@@ -1071,7 +1085,7 @@ void batchImportVCF()
             strcpy(tempContact.phone, phoneBuf);
         }
         
-        // ¶ÁÈ¡·Ö×é
+        // è¯»å–åˆ†ç»„
         if(strstr(tempLine, "CATEGORIES:") != NULL)
         {
             char groupBuf[MAX_GROUP_LEN] = {0};
@@ -1084,7 +1098,7 @@ void batchImportVCF()
             strcpy(tempContact.group, groupBuf);
         }
         
-        // ¶ÁÈ¡ºÚÃûµ¥±ê¼Ç
+        // è¯»å–é»‘åå•æ ‡è®°
         if(strstr(tempLine, "X-BLACKLIST:") != NULL || strstr(tempLine, "X-BLACK:") != NULL)
         {
             int blackFlag = 0;
@@ -1095,10 +1109,10 @@ void batchImportVCF()
             tempContact.isBlackList = blackFlag;
         }
         
-        // Óöµ½ END:VCARD ±íÊ¾Ò»¸öÁªÏµÈË¶ÁÈ¡Íê³É
+        // é‡åˆ° END:VCARD è¡¨ç¤ºä¸€ä¸ªè”ç³»äººè¯»å–å®Œæˆ
         if(strstr(tempLine, "END:VCARD") != NULL)
         {
-            // ¼ì²éÊÇ·ñÖØ¸´
+            // æ£€æŸ¥æ˜¯å¦é‡å¤
             int repeatFlag = 0;
             for(i = 0; i < localTotal; i++)
             {
@@ -1116,34 +1130,34 @@ void batchImportVCF()
                 continue;
             }
             
-            // Èç¹ûÃ»ÓĞ·Ö×éĞÅÏ¢£¬ÈÃÓÃ»§Ñ¡Ôñ
+            // å¦‚æœæ²¡æœ‰åˆ†ç»„ä¿¡æ¯ï¼Œè®©ç”¨æˆ·é€‰æ‹©
             if(strlen(tempContact.group) == 0)
             {
                 int groupChoice;
-                printf("\nÁªÏµÈË£º%s (%s) Î´ÉèÖÃ·Ö×é\n", tempContact.name, tempContact.phone);
-                printf("ÇëÑ¡Ôñ·Ö×é£º1.Ä¬ÈÏ·Ö×é  2.¼ÒÈË  3.ÅóÓÑ  4.Í¬ÊÂ  5.×Ô¶¨Òå\n");
-                printf("ÇëÊäÈëÊı×Ö£º");
+                printf("\nè”ç³»äººï¼š%s (%s) æœªè®¾ç½®åˆ†ç»„\n", tempContact.name, tempContact.phone);
+                printf("è¯·é€‰æ‹©åˆ†ç»„ï¼š1.é»˜è®¤åˆ†ç»„  2.å®¶äºº  3.æœ‹å‹  4.åŒäº‹  5.è‡ªå®šä¹‰\n");
+                printf("è¯·è¾“å…¥æ•°å­—ï¼š");
                 scanf("%d", &groupChoice);
                 clearBuf();
 
                 switch(groupChoice)
                 {
                     case 2:
-                        strcpy(tempContact.group, "¼ÒÈË");
+                        strcpy(tempContact.group, "å®¶äºº");
                         break;
                     case 3:
-                        strcpy(tempContact.group, "ÅóÓÑ");
+                        strcpy(tempContact.group, "æœ‹å‹");
                         break;
                     case 4:
-                        strcpy(tempContact.group, "Í¬ÊÂ");
+                        strcpy(tempContact.group, "åŒäº‹");
                         break;
                     case 5:
-                        printf("ÇëÊäÈë×Ô¶¨Òå·Ö×éÃû³Æ£º");
+                        printf("è¯·è¾“å…¥è‡ªå®šä¹‰åˆ†ç»„åç§°ï¼š");
                         scanf("%s", tempContact.group);
                         clearBuf();
                         break;
                     default:
-                        strcpy(tempContact.group, "Ä¬ÈÏ·Ö×é");
+                        strcpy(tempContact.group, "é»˜è®¤åˆ†ç»„");
                         break;
                 }
             }
@@ -1152,16 +1166,16 @@ void batchImportVCF()
             
             if(localTotal >= MAX_STORE_NUM)
             {
-                printf("ÈİÁ¿ÒÑÂú£¬Í£Ö¹µ¼Èë\n");
+                printf("å®¹é‡å·²æ»¡ï¼Œåœæ­¢å¯¼å…¥\n");
                 memset(&tempContact, 0, sizeof(ContactInfo));
                 break;
             }
             
-            printf("¡¾µ¼Èë¡¿%s (%s) ·Ö×é£º%s ºÚÃûµ¥£º%s\n", 
+            printf("ã€å¯¼å…¥ã€‘%s (%s) åˆ†ç»„ï¼š%s é»‘åå•ï¼š%s\n", 
                    tempContact.name, 
                    tempContact.phone, 
                    tempContact.group,
-                   tempContact.isBlackList ? "ÊÇ" : "·ñ");
+                   tempContact.isBlackList ? "æ˜¯" : "å¦");
             
             localData[localTotal++] = tempContact;
             successImportNum++;
@@ -1175,9 +1189,9 @@ void batchImportVCF()
     fwrite(localData, sizeof(ContactInfo), localTotal, binStore);
     fclose(binStore);
     
-    printf("\n========== µ¼ÈëÍê³É ==========\n");
-    printf("³É¹¦µ¼Èë£º%dÈË\n", successImportNum);
-    printf("ÖØ¸´Ìø¹ı£º%dÈË\n", repeatContact);
+    printf("\n========== å¯¼å…¥å®Œæˆ ==========\n");
+    printf("æˆåŠŸå¯¼å…¥ï¼š%däºº\n", successImportNum);
+    printf("é‡å¤è·³è¿‡ï¼š%däºº\n", repeatContact);
 }
 
 void exportDesensitizeData(int exportType)
@@ -1189,7 +1203,7 @@ void exportDesensitizeData(int exportType)
     loadBinaryDataToMemory(localData, &localTotal, localGroup, localHour);
     if(localTotal <= 0)
     {
-        printf("¡¾µ¼³öÖÕÖ¹¡¿µ±Ç°Í¨Ñ¶Â¼ÎŞÈÎºÎÁªÏµÈËÊı¾İ£¬ÎŞ·¨Éú³Éµ¼³öÎÄ¼ş\n");
+        printf("ã€å¯¼å‡ºç»ˆæ­¢ã€‘å½“å‰é€šè®¯å½•æ— ä»»ä½•è”ç³»äººæ•°æ®ï¼Œæ— æ³•ç”Ÿæˆå¯¼å‡ºæ–‡ä»¶\n");
         return;
     }
     FILE *fp = NULL;
@@ -1198,18 +1212,18 @@ void exportDesensitizeData(int exportType)
     if(exportType == 1)
     {
         fp = fopen(EXPORT_CSV_NAME, "wb");
-        fprintf(fp, "ÁªÏµÈËĞÕÃû,ÊÖ»úºÅÂë,ËùÊô·Ö×é,ÊÇ·ñºÚÃûµ¥±ê¼Ç\n");
+        fprintf(fp, "è”ç³»äººå§“å,æ‰‹æœºå·ç ,æ‰€å±åˆ†ç»„,æ˜¯å¦é»‘åå•æ ‡è®°\n");
     }
     else
     {
         fp = fopen(EXPORT_TXT_NAME, "wb");
         fprintf(fp,"================================================\n");
-        fprintf(fp,"Í¨Ñ¶Â¼¶ÔÍâ·Ö·¢ÍÑÃôÎÄ¼ş ½ûÖ¹Ö±½Ó´«²¥Ô­Ê¼ÒşË½Êı¾İ\n");
+        fprintf(fp,"é€šè®¯å½•å¯¹å¤–åˆ†å‘è„±æ•æ–‡ä»¶ ç¦æ­¢ç›´æ¥ä¼ æ’­åŸå§‹éšç§æ•°æ®\n");
         fprintf(fp,"================================================\n\n");
     }
     if(fp == NULL)
     {
-        printf("¡¾µ¼³öÊ§°Ü¡¿Ä¿±êÎÄ¼ş´´½¨Ê§°Ü£¬Çë¼ì²é´ÅÅÌÊ£Óà¿Õ¼ä£¡\n");
+        printf("ã€å¯¼å‡ºå¤±è´¥ã€‘ç›®æ ‡æ–‡ä»¶åˆ›å»ºå¤±è´¥ï¼Œè¯·æ£€æŸ¥ç£ç›˜å‰©ä½™ç©ºé—´ï¼\n");
         return;
     }
     for(i = 0; i < localTotal; i++)
@@ -1222,22 +1236,22 @@ void exportDesensitizeData(int exportType)
         }
         else
         {
-            // ĞŞ¸´ÈıÔª±í´ïÊ½³õÊ¼»¯Êı×é±¨´í£¬¸ÄÓÃstrcpy¸³Öµ
+            // ä¿®å¤ä¸‰å…ƒè¡¨è¾¾å¼åˆå§‹åŒ–æ•°ç»„æŠ¥é”™ï¼Œæ”¹ç”¨strcpyèµ‹å€¼
             char flag[4];
             if(tmp.isBlackList == 1)
-                strcpy(flag, "ÊÇ");
+                strcpy(flag, "æ˜¯");
             else
-                strcpy(flag, "·ñ");
-            fprintf(fp,"ĞÕÃû:%s ÊÖ»ú:%s ·Ö×é:%s ºÚÃûµ¥:%s\n",tmp.name,tmp.phone,tmp.group,flag);
+                strcpy(flag, "å¦");
+            fprintf(fp,"å§“å:%s æ‰‹æœº:%s åˆ†ç»„:%s é»‘åå•:%s\n",tmp.name,tmp.phone,tmp.group,flag);
         }
     }
     fclose(fp);
-    printf("===== ÎÄ¼şµ¼³ö²Ù×÷Íê³É =====\n");
+    printf("===== æ–‡ä»¶å¯¼å‡ºæ“ä½œå®Œæˆ =====\n");
     if(exportType == 1)
-        printf("µ¼³öÎÄ¼ş£º%s\n", EXPORT_CSV_NAME);
+        printf("å¯¼å‡ºæ–‡ä»¶ï¼š%s\n", EXPORT_CSV_NAME);
     else
-        printf("µ¼³öÎÄ¼ş£º%s\n", EXPORT_TXT_NAME);
-    printf("ËùÓĞÃô¸ĞÊÖ»úºÅ½öÔÚÄÚ´æÁÙÊ±ÍÑÃô£¬¶ş½øÖÆÔ´ÎÄ¼şÊı¾İ±£³ÖÔ­Ê¼ÍêÕû\n");
+        printf("å¯¼å‡ºæ–‡ä»¶ï¼š%s\n", EXPORT_TXT_NAME);
+    printf("æ‰€æœ‰æ•æ„Ÿæ‰‹æœºå·ä»…åœ¨å†…å­˜ä¸´æ—¶è„±æ•ï¼ŒäºŒè¿›åˆ¶æºæ–‡ä»¶æ•°æ®ä¿æŒåŸå§‹å®Œæ•´\n");
 }
 
 void showContactGroupChart(ContactInfo data[], int total, int groupCnt[])
@@ -1252,14 +1266,14 @@ void showContactGroupChart(ContactInfo data[], int total, int groupCnt[])
         r2 = (float)groupCnt[2]/all*100;
         r3 = (float)groupCnt[3]/all*100;
     }
-    printf("×ÜÈËÊı:%d\nÄ¬ÈÏ·Ö×é%d(%.2f%%):",groupCnt[0],r0);
-    for(i=0;i<groupCnt[0];i++) printf("¡ö");
-    printf("\n¼ÒÈË%d(%.2f%%):",groupCnt[1],r1);
-    for(i=0;i<groupCnt[1];i++) printf("¡ö");
-    printf("\nÅóÓÑ%d(%.2f%%):",groupCnt[2],r2);
-    for(i=0;i<groupCnt[2];i++) printf("¡ö");
-    printf("\nÍ¬ÊÂ%d(%.2f%%):",groupCnt[3],r3);
-    for(i=0;i<groupCnt[3];i++) printf("¡ö\n");
+    printf("æ€»äººæ•°:%d\né»˜è®¤åˆ†ç»„%d(%.2f%%):",groupCnt[0],r0);
+    for(i=0;i<groupCnt[0];i++) printf("â– ");
+    printf("\nå®¶äºº%d(%.2f%%):",groupCnt[1],r1);
+    for(i=0;i<groupCnt[1];i++) printf("â– ");
+    printf("\næœ‹å‹%d(%.2f%%):",groupCnt[2],r2);
+    for(i=0;i<groupCnt[2];i++) printf("â– ");
+    printf("\nåŒäº‹%d(%.2f%%):",groupCnt[3],r3);
+    for(i=0;i<groupCnt[3];i++) printf("â– \n");
 }
 
 void showBlackWhiteChart(ContactInfo data[], int total)
@@ -1274,10 +1288,10 @@ void showBlackWhiteChart(ContactInfo data[], int total)
     int sum = normal+black;
     rn = sum?(float)normal/sum*100:0;
     rb = sum?(float)black/sum*100:0;
-    printf("×Ü¼ÇÂ¼%d\nÕı³£%d(%.2f%%):",normal,rn);
-    for(i=0;i<normal;i++) printf("¨~");
-    printf("\nºÚÃûµ¥%d(%.2f%%):",black,rb);
-    for(i=0;i<black;i++) printf("¨~\n");
+    printf("æ€»è®°å½•%d\næ­£å¸¸%d(%.2f%%):",normal,rn);
+    for(i=0;i<normal;i++) printf("â–‡");
+    printf("\né»‘åå•%d(%.2f%%):",black,rb);
+    for(i=0;i<black;i++) printf("â–‡\n");
 }
 
 void showMsgTimeDistributeChart(int hourCnt[])
@@ -1285,7 +1299,7 @@ void showMsgTimeDistributeChart(int hourCnt[])
     int h,i,max=0,peak=0;
     for(h=0;h<24;h++)
     {
-        printf("%02dÊ±:%dÌõ ",hourCnt[h]);
+        printf("%02dæ—¶:%dæ¡ ",hourCnt[h]);
         for(i=0;i<hourCnt[h];i++) printf("?");
         printf("\n");
         if(hourCnt[h]>max)
@@ -1294,7 +1308,7 @@ void showMsgTimeDistributeChart(int hourCnt[])
             peak = h;
         }
     }
-    printf("¸ß·åÊ±¶Î%dµã\n",peak);
+    printf("é«˜å³°æ—¶æ®µ%dç‚¹\n",peak);
 }
 void showAllVisualAnalysis()
 {
@@ -1303,14 +1317,14 @@ void showAllVisualAnalysis()
     int i, j;
     int normal = 0, black = 0;
 
-    // ===== Í³¼ÆÖ÷Í¨Ñ¶Â¼ (contact.bin) =====
+    // ===== ç»Ÿè®¡ä¸»é€šè®¯å½• (contact.bin) =====
     printf("\n========================================\n");
-    printf("          Ö÷Í¨Ñ¶Â¼Í³¼Æ\n");
+    printf("          ä¸»é€šè®¯å½•ç»Ÿè®¡\n");
     printf("========================================\n");
     
     if(count <= 0)
     {
-        printf("  Ö÷Í¨Ñ¶Â¼ÎŞÊı¾İ\n");
+        printf("  ä¸»é€šè®¯å½•æ— æ•°æ®\n");
     }
     else
     {
@@ -1344,15 +1358,15 @@ void showAllVisualAnalysis()
             }
         }
 
-        printf("  ×ÜÈËÊı: %dÈË\n", count);
+        printf("  æ€»äººæ•°: %däºº\n", count);
         printf("  ------------------------------\n");
         for(i = 0; i < groupNum; i++)
         {
             float ratio = (float)groupCounts[i] / count * 100;
-            printf("  %-10s %3dÈË ( %5.1f%% ) ", groupNames[i], groupCounts[i], ratio);
+            printf("  %-10s %3däºº ( %5.1f%% ) ", groupNames[i], groupCounts[i], ratio);
             int barLen = (int)(groupCounts[i] * 30 / count);
             if(barLen < 1 && groupCounts[i] > 0) barLen = 1;
-            for(j = 0; j < barLen && j < 30; j++) printf("¡ö");
+            for(j = 0; j < barLen && j < 30; j++) printf("â– ");
             printf("\n");
         }
 
@@ -1360,27 +1374,27 @@ void showAllVisualAnalysis()
         int sum = normal + black;
         float rn = (float)normal / sum * 100;
         float rb = (float)black / sum * 100;
-        printf("  Õı³£   %3dÈË ( %5.1f%% ) ", normal, rn);
+        printf("  æ­£å¸¸   %3däºº ( %5.1f%% ) ", normal, rn);
         int barLenN = (int)(normal * 30 / sum);
         if(barLenN < 1 && normal > 0) barLenN = 1;
-        for(i = 0; i < barLenN && i < 30; i++) printf("¨~");
+        for(i = 0; i < barLenN && i < 30; i++) printf("â–‡");
         printf("\n");
-        printf("  ºÚÃûµ¥ %3dÈË ( %5.1f%% ) ", black, rb);
+        printf("  é»‘åå• %3däºº ( %5.1f%% ) ", black, rb);
         int barLenB = (int)(black * 30 / sum);
         if(barLenB < 1 && black > 0) barLenB = 1;
-        for(i = 0; i < barLenB && i < 30; i++) printf("¨~");
+        for(i = 0; i < barLenB && i < 30; i++) printf("â–‡");
         printf("\n");
     }
 
-    // ===== Í³¼ÆVCF¹¤¾ßÊı¾İ (MAIN_BIN_FILE) =====
+    // ===== ç»Ÿè®¡VCFå·¥å…·æ•°æ® (MAIN_BIN_FILE) =====
     printf("\n========================================\n");
-    printf("          VCF¹¤¾ßÊı¾İÍ³¼Æ\n");
+    printf("          VCFå·¥å…·æ•°æ®ç»Ÿè®¡\n");
     printf("========================================\n");
     
     FILE *check = fopen(MAIN_BIN_FILE, "rb");
     if(check == NULL)
     {
-        printf("  VCF¹¤¾ßÎŞÊı¾İ£¨ÇëÊ¹ÓÃ²Ëµ¥18µ¼Èë£©\n");
+        printf("  VCFå·¥å…·æ— æ•°æ®ï¼ˆè¯·ä½¿ç”¨èœå•18å¯¼å…¥ï¼‰\n");
         return;
     }
     fclose(check);
@@ -1394,11 +1408,11 @@ void showAllVisualAnalysis()
 
     if(vcfTotal <= 0)
     {
-        printf("  VCF¹¤¾ßÎŞÊı¾İ£¨ÇëÊ¹ÓÃ²Ëµ¥18µ¼Èë£©\n");
+        printf("  VCFå·¥å…·æ— æ•°æ®ï¼ˆè¯·ä½¿ç”¨èœå•18å¯¼å…¥ï¼‰\n");
         return;
     }
 
-    // VCF ¶¯Ì¬Í³¼ÆËùÓĞ·Ö×é
+    // VCF åŠ¨æ€ç»Ÿè®¡æ‰€æœ‰åˆ†ç»„
     char vcfGroupNames[MAX_STORE_NUM][15];
     int vcfGroupCounts[MAX_STORE_NUM] = {0};
     int vcfGroupNum = 0;
@@ -1430,15 +1444,15 @@ void showAllVisualAnalysis()
         }
     }
 
-    printf("  ×ÜÈËÊı: %dÈË\n", vcfTotal);
+    printf("  æ€»äººæ•°: %däºº\n", vcfTotal);
     printf("  ------------------------------\n");
     for(i = 0; i < vcfGroupNum; i++)
     {
         float ratio = (float)vcfGroupCounts[i] / vcfTotal * 100;
-        printf("  %-10s %3dÈË ( %5.1f%% ) ", vcfGroupNames[i], vcfGroupCounts[i], ratio);
+        printf("  %-10s %3däºº ( %5.1f%% ) ", vcfGroupNames[i], vcfGroupCounts[i], ratio);
         int barLen = (int)(vcfGroupCounts[i] * 30 / vcfTotal);
         if(barLen < 1 && vcfGroupCounts[i] > 0) barLen = 1;
-        for(j = 0; j < barLen && j < 30; j++) printf("¡ö");
+        for(j = 0; j < barLen && j < 30; j++) printf("â– ");
         printf("\n");
     }
 
@@ -1446,15 +1460,15 @@ void showAllVisualAnalysis()
     int vcfSum = vcfNormal + vcfBlack;
     float vcfRn = (float)vcfNormal / vcfSum * 100;
     float vcfRb = (float)vcfBlack / vcfSum * 100;
-    printf("  Õı³£   %3dÈË ( %5.1f%% ) ", vcfNormal, vcfRn);
+    printf("  æ­£å¸¸   %3däºº ( %5.1f%% ) ", vcfNormal, vcfRn);
     int vcfBarLenN = (int)(vcfNormal * 30 / vcfSum);
     if(vcfBarLenN < 1 && vcfNormal > 0) vcfBarLenN = 1;
-    for(i = 0; i < vcfBarLenN && i < 30; i++) printf("¨~");
+    for(i = 0; i < vcfBarLenN && i < 30; i++) printf("â–‡");
     printf("\n");
-    printf("  ºÚÃûµ¥ %3dÈË ( %5.1f%% ) ", vcfBlack, vcfRb);
+    printf("  é»‘åå• %3däºº ( %5.1f%% ) ", vcfBlack, vcfRb);
     int vcfBarLenB = (int)(vcfBlack * 30 / vcfSum);
     if(vcfBarLenB < 1 && vcfBlack > 0) vcfBarLenB = 1;
-    for(i = 0; i < vcfBarLenB && i < 30; i++) printf("¨~");
+    for(i = 0; i < vcfBarLenB && i < 30; i++) printf("â–‡");
     printf("\n");
     printf("========================================\n");
 }
@@ -1475,7 +1489,7 @@ void createVersionBackup()
     int len;
     if(in==NULL||out==NULL)
     {
-        printf("±¸·İÊ§°Ü\n");
+        printf("å¤‡ä»½å¤±è´¥\n");
         if(in)fclose(in);
         if(out)fclose(out);
         return;
@@ -1486,16 +1500,16 @@ void createVersionBackup()
         fwrite(buf,1,len,out);
     }
     fclose(in);fclose(out);
-    printf("±¸·İÎÄ¼ş:%s ´´½¨³É¹¦\n",name);
+    printf("å¤‡ä»½æ–‡ä»¶:%s åˆ›å»ºæˆåŠŸ\n",name);
 }
 
 void restoreHistoryBackup()
 {
     char bakName[100],confirm[10];
-    printf("¾¯¸æ»Ö¸´¸²¸ÇÏÖÓĞÊı¾İ£¬ÊäÈëyesÈ·ÈÏ£º");
+    printf("è­¦å‘Šæ¢å¤è¦†ç›–ç°æœ‰æ•°æ®ï¼Œè¾“å…¥yesç¡®è®¤ï¼š");
     scanf("%s",confirm);clearBuf();
     if(strcmp(confirm,"yes")!=0) return;
-    printf("ÊäÈë±¸·İÎÄ¼şÃû£º");
+    printf("è¾“å…¥å¤‡ä»½æ–‡ä»¶åï¼š");
     scanf("%s",bakName);clearBuf();
     FILE *bak = fopen(bakName,"rb");
     FILE *main = fopen(MAIN_BIN_FILE,"wb");
@@ -1503,7 +1517,7 @@ void restoreHistoryBackup()
     int len;
     if(bak==NULL||main==NULL)
     {
-        printf("ÎÄ¼ş´íÎó\n");
+        printf("æ–‡ä»¶é”™è¯¯\n");
         if(bak)fclose(bak);
         if(main)fclose(main);
         return;
@@ -1514,15 +1528,15 @@ void restoreHistoryBackup()
         fwrite(buf,1,len,main);
     }
     fclose(bak);fclose(main);
-    printf("»Ö¸´Íê³É\n");
+    printf("æ¢å¤å®Œæˆ\n");
 }
 
-// ====================== ²Ëµ¥ ======================
+// ====================== èœå• ======================
 void loginMenu() {
     int sel;
-    printf("====»¶Ó­Ê¹ÓÃÍ¨Ñ¶Â¼¹ÜÀíÏµÍ³====\n");
-    printf("1.ÕËºÅµÇÂ¼  2.×¢²áĞÂÕËºÅ\n");
-    printf("ÇëÑ¡Ôñ£º");
+    printf("====æ¬¢è¿ä½¿ç”¨é€šè®¯å½•ç®¡ç†ç³»ç»Ÿ====\n");
+    printf("1.è´¦å·ç™»å½•  2.æ³¨å†Œæ–°è´¦å·\n");
+    printf("è¯·é€‰æ‹©ï¼š");
     scanf("%d", &sel);
     clearBuf();
     if (sel == 1) {
@@ -1537,7 +1551,7 @@ void loginMenu() {
         registerUser();
         loginMenu();
     } else {
-        printf("ÊäÈë´íÎó£¡\n");
+        printf("è¾“å…¥é”™è¯¯ï¼\n");
         loginMenu();
     }
 }
@@ -1545,21 +1559,21 @@ void loginMenu() {
 void mainMenu() {
     int sel, gid;
     while (1) {
-        printf("\n=====Í¨Ñ¶Â¼¹ÜÀíÏµÍ³Ö÷²Ëµ¥=====\n");
-        printf("1.Ìí¼ÓÁªÏµÈË\t2.²é¿´ËùÓĞÁªÏµÈË\n");
-        printf("3.²éÑ¯ÁªÏµÈË\t4.ĞŞ¸ÄÁªÏµÈË\n");
-        printf("5.É¾³ıÁªÏµÈË\t6.°´Ãû³ÆÉ¸Ñ¡·Ö×é\n");
-        printf("7.À­ºÚÁªÏµÈË\t8.²é¿´²Ù×÷ÈÕÖ¾\n");
-        printf("9.ÇåÀíÁÙÊ±ÁªÏµÈË\n");
-        printf("10.Èº·¢¶ÌĞÅ\t11.¼ÍÄîÈÕÌáĞÑ\n");
-        printf("12.°´IDÉ¸Ñ¡·Ö×é\t13.°´ĞÕÃûÅÅĞò\n");
-        printf("14.µ¥·¢¶ÌĞÅ\t15.»Ø¸´¶ÌĞÅ\n");
-        printf("16.²é¿´ÊÕµ½¶ÌĞÅ\t17.Ä£ÄâÊÕ¶ÌĞÅ\n");
-        printf("18.VCFµ¼Èë/ÍÑÃôµ¼³ö¹¤¾ß\n");
-        printf("19.Êı¾İ¿ÉÊÓ»¯Í³¼ÆÍ¼±í\n");
-        printf("20.¼ÓÃÜ±¸·İÓë»Ö¸´\n");
-        printf("0.ÍË³öÏµÍ³\n");
-        printf("ÇëÊäÈë²Ù×÷Ñ¡Ïî£º");
+        printf("\n=====é€šè®¯å½•ç®¡ç†ç³»ç»Ÿä¸»èœå•=====\n");
+        printf("1.æ·»åŠ è”ç³»äºº\t2.æŸ¥çœ‹æ‰€æœ‰è”ç³»äºº\n");
+        printf("3.æŸ¥è¯¢è”ç³»äºº\t4.ä¿®æ”¹è”ç³»äºº\n");
+        printf("5.åˆ é™¤è”ç³»äºº\t6.æŒ‰åç§°ç­›é€‰åˆ†ç»„\n");
+        printf("7.æ‹‰é»‘è”ç³»äºº\t8.æŸ¥çœ‹æ“ä½œæ—¥å¿—\n");
+        printf("9.æ¸…ç†ä¸´æ—¶è”ç³»äºº\n");
+        printf("10.ç¾¤å‘çŸ­ä¿¡\t11.çºªå¿µæ—¥æé†’\n");
+        printf("12.æŒ‰IDç­›é€‰åˆ†ç»„\t13.æŒ‰å§“åæ’åº\n");
+        printf("14.å•å‘çŸ­ä¿¡\t15.å›å¤çŸ­ä¿¡\n");
+        printf("16.æŸ¥çœ‹æ”¶åˆ°çŸ­ä¿¡\t17.æ¨¡æ‹Ÿæ”¶çŸ­ä¿¡\n");
+        printf("18.VCFå¯¼å…¥/è„±æ•å¯¼å‡ºå·¥å…·\n");
+        printf("19.æ•°æ®å¯è§†åŒ–ç»Ÿè®¡å›¾è¡¨\n");
+        printf("20.åŠ å¯†å¤‡ä»½ä¸æ¢å¤\n");
+        printf("0.é€€å‡ºç³»ç»Ÿ\n");
+        printf("è¯·è¾“å…¥æ“ä½œé€‰é¡¹ï¼š");
         scanf("%d", &sel);
         clearBuf();
         switch (sel) {
@@ -1573,12 +1587,12 @@ void mainMenu() {
             case 8: showLog(); break;
             case 9: checkTempContact(); break;
             case 10:
-                printf("·Ö×éID£º");
+                printf("åˆ†ç»„IDï¼š");
                 scanf("%d",&gid);clearBuf();
                 groupSendSms(gid);break;
             case 11: remindAnniversary(); break;
             case 12:
-                printf("·Ö×éID£º");
+                printf("åˆ†ç»„IDï¼š");
                 scanf("%d",&gid);clearBuf();
                 filterByGroupID(gid);break;
             case 13: sortContactByName(); break;
@@ -1589,7 +1603,7 @@ void mainMenu() {
             case 18:
 			{
     			int op;
-    			printf("1.VCFÅúÁ¿µ¼Èë 2.µ¼³öCSV 3.µ¼³öTXT\nÑ¡Ôñ£º");
+    			printf("1.VCFæ‰¹é‡å¯¼å…¥ 2.å¯¼å‡ºCSV 3.å¯¼å‡ºTXT\né€‰æ‹©ï¼š");
     			scanf("%d",&op);clearBuf();
     			if(op==1) 
     				{
@@ -1597,15 +1611,15 @@ void mainMenu() {
     				}
     			else if(op == 2) 
    					{
-        				exportDesensitizeData(1); // Ñ¡2 CSV£¬´«1
+        				exportDesensitizeData(1); // é€‰2 CSVï¼Œä¼ 1
     				}
     			else if(op == 3)
    					{
-        				exportDesensitizeData(2); // Ñ¡3 TXT£¬´«2
+        				exportDesensitizeData(2); // é€‰3 TXTï¼Œä¼ 2
     				}
     			else 
     				{
-        				printf("ÎŞĞ§\n");
+        				printf("æ— æ•ˆ\n");
     				}
     			break;
 			}
@@ -1613,17 +1627,17 @@ void mainMenu() {
             case 20:
             {
                 int op;
-                printf("1.´´½¨¼ÓÃÜ±¸·İ 2.»Ö¸´±¸·İ\nÑ¡Ôñ£º");
+                printf("1.åˆ›å»ºåŠ å¯†å¤‡ä»½ 2.æ¢å¤å¤‡ä»½\né€‰æ‹©ï¼š");
                 scanf("%d",&op);clearBuf();
                 if(op==1) createVersionBackup();
                 else if(op==2) restoreHistoryBackup();
-                else printf("ÎŞĞ§\n");
+                else printf("æ— æ•ˆ\n");
                 break;
             }
-            case 0: printf("ÏµÍ³ÍË³ö\n");return;
-            default: printf("ÊäÈë´íÎó\n");
+            case 0: printf("ç³»ç»Ÿé€€å‡º\n");return;
+            default: printf("è¾“å…¥é”™è¯¯\n");
         }
-        printf("\n»Ø³µ·µ»Ø²Ëµ¥...");
+        printf("\nå›è½¦è¿”å›èœå•...");
         getchar();
     }
 }
