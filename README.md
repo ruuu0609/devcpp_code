@@ -72,9 +72,4 @@
 4. 联系人重复检测、缓冲区清空、XOR二进制加密
 5. 程序初始化：首次运行自动创建全部存储文件，无需手动新建
 
-## 编译与运行方式
-### Windows（MinGW / Dev-C++ / CodeBlocks）
-1. 将源码保存为 `contact.c`
-2. CMD进入代码目录，执行编译命令：
-```bash
-gcc contact.c -o contact.exe -luser32
+
