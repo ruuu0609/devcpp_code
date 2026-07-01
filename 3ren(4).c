@@ -420,13 +420,14 @@ void showAllContact() {
         return;
     }
     printf("\n===================所有联系人===================\n");
-    printf("ID\t姓名\t手机号\t\t分组\t隐私等级\t黑名单\t标签\t\t纪念日\n");
+    printf("ID\t姓名\t手机号\t\t分组ID\t分组\t隐私等级\t黑名单\t标签\t\t纪念日\n");
     for (i = 0; i < count; i++) {
         getMonthDay(allCon[i].anniv_ts, md);
-		printf("%d\t%s\t%s\t%s\t%d\t\t%s\t%-16s%s\n",
+		printf("%d\t%s\t%s\t%d\t%s\t%d\t\t%s\t%-16s%s\n",
        		allCon[i].id,
        		allCon[i].name,
        		allCon[i].phone,
+			allCon[i].group_id,
        		allCon[i].group,
        		allCon[i].privacy,
        		allCon[i].isBlack == 1 ? "是" : "否",
